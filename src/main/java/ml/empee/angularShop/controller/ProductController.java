@@ -1,10 +1,9 @@
 package ml.empee.angularShop.controller;
 
-import ml.empee.angularShop.exceptions.ResourceNotFound;
+import ml.empee.angularShop.exceptions.ResourceNotFoundException;
 import ml.empee.angularShop.model.product.dto.ProductRequest;
 import ml.empee.angularShop.model.product.dto.ProductResponse;
 import ml.empee.angularShop.model.services.ProductsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ProductController {
 
-    @Autowired
-    ProductsService productsService;
+    private final ProductsService productsService;
+    public ProductController(ProductsService productsService) {
+        this.productsService = productsService;
+    }
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductResponse>> findProducts() {
@@ -25,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductResponse> findProductByID(@PathVariable(value = "id") Long prodID) throws ResourceNotFound {
+    public ResponseEntity<ProductResponse> findProductByID(@PathVariable(value = "id") Long prodID) throws ResourceNotFoundException {
         return ResponseEntity.ok(productsService.findProductByID(prodID));
     }
 
@@ -39,7 +40,7 @@ public class ProductController {
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable(value = "id") Long prodID, @Valid @RequestBody ProductRequest request) {
         try {
             return ResponseEntity.ok(productsService.updateProduct(prodID, request));
-        } catch (ResourceNotFound e) {
+        } catch (ResourceNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -48,7 +49,7 @@ public class ProductController {
     public ResponseEntity<ProductResponse> deleteProduct(@PathVariable(value = "id") Long prodID) {
         try {
             return ResponseEntity.ok(productsService.deleteProduct(prodID));
-        } catch (ResourceNotFound e) {
+        } catch (ResourceNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
