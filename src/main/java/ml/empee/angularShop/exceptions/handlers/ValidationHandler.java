@@ -1,4 +1,4 @@
-package ml.empee.angularShop.exceptions;
+package ml.empee.angularShop.exceptions.handlers;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,10 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         HashMap<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach( error -> {
-            errors.put(
-                    error.getObjectName(),
-                    error.getDefaultMessage()
-            );
-        });
+        ex.getBindingResult().getAllErrors().forEach( error -> errors.put(
+                error.getObjectName(),
+                error.getDefaultMessage()
+        ));
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
