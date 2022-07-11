@@ -3,6 +3,7 @@ package ml.empee.angularShop.controller;
 import ml.empee.angularShop.exceptions.ResourceNotFoundException;
 import ml.empee.angularShop.model.product.dto.ProductRequest;
 import ml.empee.angularShop.model.product.dto.ProductResponse;
+import ml.empee.angularShop.model.services.IProductsService;
 import ml.empee.angularShop.model.services.ProductsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ProductController {
 
-    private final ProductsService productsService;
+    private final IProductsService productsService;
     public ProductController(ProductsService productsService) {
         this.productsService = productsService;
     }
@@ -25,11 +26,15 @@ public class ProductController {
         return ResponseEntity.ok(productsService.findProducts());
     }
 
-    @GetMapping("/products/{id}")
-    public ResponseEntity<ProductResponse> findProductByID(@PathVariable(value = "id") Long prodID) throws ResourceNotFoundException {
+    @GetMapping(value = "/products", params = "prodID")
+    public ResponseEntity<ProductResponse> findProductByID(@RequestParam Long prodID) throws ResourceNotFoundException {
         return ResponseEntity.ok(productsService.findProductByID(prodID));
     }
 
+    @GetMapping(value = "/products", params = "categoryID")
+    public ResponseEntity<List<ProductResponse>> findProductsByCategory(@RequestParam Long categoryID) {
+        return ResponseEntity.ok(productsService.findProductsByCategory(categoryID));
+    }
 
     @PostMapping("/products")
     public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest request) {

@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface IProductsService {
     List<ProductResponse> findProducts();
-    ProductResponse findProductByID(Long productID) throws Throwable;
+    ProductResponse findProductByID(Long productID) throws ResourceNotFoundException;
+    List<ProductResponse> findProductsByCategory(Long categoryID);
     ProductResponse updateProduct(Long productID, ProductRequest product) throws ResourceNotFoundException;
     ProductResponse saveProduct(ProductRequest request);
     ProductResponse deleteProduct(Long productID) throws ResourceNotFoundException;
