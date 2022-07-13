@@ -1,11 +1,12 @@
 package ml.empee.angularShop.controller;
 
 import ml.empee.angularShop.exceptions.ResourceNotFoundException;
+import ml.empee.angularShop.model.product.IProductsService;
+import ml.empee.angularShop.model.product.ProductsService;
 import ml.empee.angularShop.model.product.dto.ProductRequest;
 import ml.empee.angularShop.model.product.dto.ProductResponse;
-import ml.empee.angularShop.model.services.IProductsService;
-import ml.empee.angularShop.model.services.ProductsService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,11 +38,13 @@ public class ProductController {
     }
 
     @PostMapping("/products")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest request) {
         return ResponseEntity.ok(productsService.saveProduct(request));
     }
 
     @PutMapping("/products/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable(value = "id") Long prodID, @Valid @RequestBody ProductRequest request) {
         try {
             return ResponseEntity.ok(productsService.updateProduct(prodID, request));
@@ -51,6 +54,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProductResponse> deleteProduct(@PathVariable(value = "id") Long prodID) {
         try {
             return ResponseEntity.ok(productsService.deleteProduct(prodID));
