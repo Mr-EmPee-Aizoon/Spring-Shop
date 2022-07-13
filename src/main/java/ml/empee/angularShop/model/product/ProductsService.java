@@ -1,10 +1,8 @@
-package ml.empee.angularShop.model.services;
+package ml.empee.angularShop.model.product;
 
 import ml.empee.angularShop.exceptions.ResourceNotFoundException;
-import ml.empee.angularShop.model.product.ProductEntity;
 import ml.empee.angularShop.model.product.dto.ProductRequest;
 import ml.empee.angularShop.model.product.dto.ProductResponse;
-import ml.empee.angularShop.model.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

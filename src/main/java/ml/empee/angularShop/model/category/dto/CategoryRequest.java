@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Getter @Setter
 public class CategoryRequest extends CommonDTO<CategoryEntity, CategoryRequest>  {
 
-    @NotBlank
+    @NotBlank(message = "The category name can't be blank")
     private String name;
 
 }

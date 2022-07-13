@@ -27,7 +27,7 @@ public class ProductRequest extends CommonDTO<ProductEntity, ProductRequest>  {
     @Min(message = "The price can't be lower the 0", value = 0)
     @NotNull(message = "The price can't be null")
     private Double price;
-    @NotNull
+    @NotNull(message = "The categoryID can't be null")
     private Long categoryID;
 
     private String imagePath;

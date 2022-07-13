@@ -1,4 +1,4 @@
-package ml.empee.angularShop.model.services;
+package ml.empee.angularShop.model.category;
 
 import ml.empee.angularShop.exceptions.ResourceNotFoundException;
 import ml.empee.angularShop.model.category.dto.CategoryRequest;
